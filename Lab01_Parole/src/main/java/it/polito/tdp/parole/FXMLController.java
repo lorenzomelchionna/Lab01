@@ -14,7 +14,8 @@ public class FXMLController {
 	
 	Parole elenco;
 	
-	
+	long tinizio;
+	long tfine;
 
     @FXML
     private ResourceBundle resources;
@@ -40,7 +41,8 @@ public class FXMLController {
     @FXML
     void doInsert(ActionEvent event) {
     	
-    	// TODO
+    	tinizio = System.nanoTime();
+    	
     	if(txtParola.getText().compareTo("") == 0)
     		txtResult.setText("Non hai inserito nulla!");
     	else {
@@ -56,52 +58,52 @@ public class FXMLController {
     	
     	txtParola.clear();
     	
-    	txtTime.setText(String.valueOf(System.nanoTime()));
+    	tfine = System.nanoTime();
+    	
+    	txtTime.setText(String.valueOf((double)(tfine-tinizio)/1e6)+" millisecondi");
     	
     }
     
     @FXML
     void doCancella(ActionEvent event) {
     	
-    	if(txtParola.getText().compareTo("") == 0)
+    	tinizio = System.nanoTime();
+    	
+    	if(txtResult.getSelectedText().compareTo("") == 0)
     		txtResult.setText("Non hai inserito nulla!");
     	
-    	boolean trovata = false;
+    	
     	
     	for(String s : elenco.getElenco())
-    		if(s.compareTo(txtParola.getText()) == 0) {
-    			
-    			trovata = true;
-    			elenco.cancella(txtParola.getText());
-    			
+    		if(s.compareTo(txtResult.getSelectedText()) == 0) {
+    			elenco.cancella(txtResult.getSelectedText());
     		}
     	
-    	if(trovata == false)
-    		txtResult.setText("Hai inserito una parola inesistente!");
-    	else {
+    	txtResult.clear();
     		
-    		txtResult.clear();
-    		
-    		for(String se : elenco.getElenco())
-        			txtResult.appendText(se+"\n");
-    		
-    	}
+    	for(String se : elenco.getElenco())
+       		txtResult.appendText(se+"\n");
     		
     	txtParola.clear();
     	
-    	txtTime.setText(String.valueOf(System.nanoTime()));
+    	tfine = System.nanoTime();
     	
+    	txtTime.setText(String.valueOf((double)(tfine-tinizio)/1e6)+" millisecondi");
+
     }
     
     @FXML
     void doReset(ActionEvent event) {
     	
-    	// TODO
+    	tinizio = System.nanoTime();
+    	
     	elenco.reset();
     	txtParola.clear();
     	txtResult.clear();
     	
-    	txtTime.setText(String.valueOf(System.nanoTime()));
+    	tfine = System.nanoTime();
+    	
+    	txtTime.setText(String.valueOf((double)(tfine-tinizio)/1e6)+" millisecondi");
     	
     }
 
